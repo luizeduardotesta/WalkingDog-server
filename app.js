@@ -7,6 +7,10 @@ require("dotenv").config()
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
+const errorHandler = require('./middleware/error')
+
+//Import routes
+const authRoutes = require('./routes/authRoutes');
 
 //Database connection
 mongoose.connect(process.env.DATABASE, {
@@ -26,6 +30,12 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cookieParser())
 app.use(cors())
+
+//Routes Middleware
+app.use('/api', authRoutes);
+
+//Error Middleware
+app.use(errorHandler);
 
 //port 
 const port = process.env.PORT || 5000
