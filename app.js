@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const moment = require('moment');
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -11,6 +12,7 @@ const errorHandler = require('./middleware/error')
 
 //Import routes
 const authRoutes = require('./routes/authRoutes');
+const appointmentRoutes = require('./routes/appointmentRoutes');
 
 //Database connection
 mongoose.connect(process.env.DATABASE, {
@@ -33,6 +35,7 @@ app.use(cors())
 
 //Routes Middleware
 app.use('/api', authRoutes);
+app.use('/api', appointmentRoutes);
 
 //Error Middleware
 app.use(errorHandler);
