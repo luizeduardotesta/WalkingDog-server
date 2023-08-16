@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 
 //Checar se o usuário esta autenticado
-exports.estaAutenticado = async (req, res, next) => {
+exports.isAuthenticated = async (req, res, next) => {
     const { token } = req.cookies
     //Confirma se o token existe
     if (!token) {
