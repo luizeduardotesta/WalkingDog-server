@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 require("dotenv").config()
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const createAdminIfNotExists = require('./controllers/createAdmin');
 
 const errorHandler = require('./middleware/error')
 
@@ -19,8 +20,11 @@ mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-    .then(() => console.log('Database connection established'))
-    .catch((err) => console.error(err))
+    .then(() => {
+        console.log('Database connection established');
+        createAdminIfNotExists();
+    })
+    .catch((err) => console.error(err));
 
 
 //Middleware

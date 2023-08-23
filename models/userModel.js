@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     },
     tipo: {
         type: String,
+        enum: ['user', 'admin'],
         default: 'user',
     },
     cep: {

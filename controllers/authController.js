@@ -40,7 +40,7 @@ exports.signin = async (req, res, next) => {
         //Checar senha do usuário
         const identicas = await user.comparaSenha(senha)
         if (!identicas) {
-            return next(new ErrorResponse("usuário não encontrado", 400))
+            return next(new ErrorResponse("senha incorreta", 400))
         }
 
         sendTokenResponse(user, 200, res)
