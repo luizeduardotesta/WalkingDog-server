@@ -57,7 +57,7 @@ const sendTokenResponse = async (user, codeStatus, res) => {
         .json({
             success: true,
             id: user._id,
-            role: user.role
+            tipo: user.tipo
         })
 }
 
