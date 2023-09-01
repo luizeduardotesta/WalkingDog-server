@@ -78,3 +78,19 @@ exports.userProfile = async (req, res, next) => {
         user
     })
 }
+
+//Update user profile
+exports.updateUserProfile = async (req, res, next) => {
+    const { nome, email, telefone, cep, cidade, estado, rua, numero, complemento } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        req.user.id,
+        { nome, email, telefone, cep, cidade, estado, rua, numero, complemento },
+        { new: true }
+    );
+
+    res.status(200).json({
+        success: true,
+        user: updatedUser,
+    });
+};
