@@ -3,16 +3,16 @@ const ErrorResponse = require('../utils/errorResponse');
 const moment = require('moment');
 
 exports.createAppointment = async (req, res, next) => {
-    const { name, date } = req.body;
-    if (!name || !date) {
-        return res.status(400).json({ error: 'Name and date are required.' });
+    const { nome, date } = req.body;
+    if (!nome || !date) {
+        return res.status(400).json({ error: 'Nome and date are required.' });
     }
 
     const formattedDate = moment(date).toDate();
 
     try {
         const newAppointment = new Appointment({
-            name,
+            nome,
             date: formattedDate,
         });
 
@@ -68,7 +68,7 @@ exports.deleteAppointment = async (req, res, next) => {
 
 exports.updateAppointment = async (req, res, next) => {
     try {
-        const { name, date } = req.body;
+        const { nome, date } = req.body;
         const appointmentId = req.params.id;
 
         // Find the current appointment by ID
@@ -78,7 +78,7 @@ exports.updateAppointment = async (req, res, next) => {
         }
 
         // Update the appointment with the new data
-        currentAppointment.name = name || currentAppointment.name;
+        currentAppointment.nome = nome || currentAppointment.nome;
         currentAppointment.date = date || currentAppointment.date;
 
         // Save the updated appointment
@@ -91,7 +91,7 @@ exports.updateAppointment = async (req, res, next) => {
     }
 }; exports.updateAppointment = async (req, res, next) => {
     try {
-        const { name, date } = req.body;
+        const { nome, date } = req.body;
 
         // Find the current appointment by ID
         const currentAppointment = await Appointment.findById(req.params.id);
@@ -99,7 +99,7 @@ exports.updateAppointment = async (req, res, next) => {
             return res.status(404).json({ error: 'Appointment not found.' });
         }
 
-        currentAppointment.name = name || currentAppointment.name;
+        currentAppointment.nome = nome || currentAppointment.nome;
         currentAppointment.date = date || currentAppointment.date;
 
         const updatedAppointment = await currentAppointment.save();

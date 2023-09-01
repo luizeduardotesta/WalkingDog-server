@@ -15,7 +15,7 @@ async function createAdminIfNotExists() {
             cidade: 'Taubaté',
             cep: '12345-678',
             telefone: '11972427577',
-            name: 'Luiz Eduardo'
+            nome: 'Luiz Eduardo'
         });
 
         await newAdmin.save();
