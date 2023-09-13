@@ -3,17 +3,17 @@ const ErrorResponse = require('../utils/errorResponse');
 const moment = require('moment');
 
 exports.createAppointment = async (req, res, next) => {
-    const { nome, date } = req.body;
-    if (!nome || !date) {
-        return res.status(400).json({ error: 'Nome and date are required.' });
+    const { date } = req.body;
+    if (!date) {
+        return res.status(400).json({ error: 'Date is required.' });
     }
 
     const formattedDate = moment(date).toDate();
 
     try {
         const newAppointment = new Appointment({
-            nome,
             date: formattedDate,
+            userId: req.user.id
         });
 
         await newAppointment.save();
@@ -68,38 +68,14 @@ exports.deleteAppointment = async (req, res, next) => {
 
 exports.updateAppointment = async (req, res, next) => {
     try {
-        const { nome, date } = req.body;
+        const { date } = req.body;
         const appointmentId = req.params.id;
 
-        // Find the current appointment by ID
         const currentAppointment = await Appointment.findById(appointmentId);
         if (!currentAppointment) {
             return res.status(404).json({ error: 'Appointment not found.' });
         }
 
-        // Update the appointment with the new data
-        currentAppointment.nome = nome || currentAppointment.nome;
-        currentAppointment.date = date || currentAppointment.date;
-
-        // Save the updated appointment
-        const updatedAppointment = await currentAppointment.save();
-
-        return res.json({ success: true, appointment: updatedAppointment, message: 'Appointment updated successfully.' });
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-}; exports.updateAppointment = async (req, res, next) => {
-    try {
-        const { nome, date } = req.body;
-
-        // Find the current appointment by ID
-        const currentAppointment = await Appointment.findById(req.params.id);
-        if (!currentAppointment) {
-            return res.status(404).json({ error: 'Appointment not found.' });
-        }
-
-        currentAppointment.nome = nome || currentAppointment.nome;
         currentAppointment.date = date || currentAppointment.date;
 
         const updatedAppointment = await currentAppointment.save();
