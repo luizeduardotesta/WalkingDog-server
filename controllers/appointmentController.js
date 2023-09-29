@@ -29,7 +29,7 @@ exports.createAppointment = async (req, res, next) => {
 
 exports.showAppointment = async (req, res) => {
     try {
-        const appointments = await Appointment.find();
+        const appointments = await Appointment.find().populate('userId');
         return res.json(appointments);
     } catch (error) {
         console.log(error);
